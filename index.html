@@ -10,7 +10,7 @@
 
     <div class="voiceinator">
 
-      <h1>The Voiceinator 5000</h1>
+      <h1>Text-to-Speech!</h1>
 
       <select name="voice" id="voices">
         <option value="">Select A Voice</option>
@@ -22,14 +22,14 @@
       <label for="pitch">Pitch:</label>
 
       <input name="pitch" type="range" min="0" max="2" step="0.1">
-      <textarea name="text">Hello! I love JavaScript 👍</textarea>
-      <button id="stop">Stop!</button>
+      <textarea name="text">Type your message here and the browser will speak it back to you!</textarea>
+      <button id="stop">Stop</button>
       <button id="speak">Speak</button>
 
     </div>
 
 <script>
-  const msg = new SpeechSynthesisUtterance(); // Provides information on the users voice input, such as the speed of the message and the pitch of the voice
+  const msg = new SpeechSynthesisUtterance(); // Provides information on the voice input, such as the speed of the message and the pitch of the voice
   let voices = [];
   const voicesDropdown = document.querySelector('[name="voice"]');
   const options = document.querySelectorAll('[type="range"], [name="text"]');
@@ -43,14 +43,14 @@
     // console.log(voices);
     voicesDropdown.innerHTML = voices
       .filter(voice => voice.lang.includes('en')) // Filters list for english-based voices only
-      .map(voice =>  `<option value="${voice.name}">${voice.name} (${voice.lang})`)
+      .map(voice => `<option value="${voice.name}">${voice.name} (${voice.lang})`)
       .join('');
     // voicesDropdown.innerHTML = voiceOptions; // Superfluous line of code
   }
 
   function setVoice() {
-    console.log('Voice changed.');
-    console.log(this.value);
+    // console.log('Voice changed.');
+    // console.log(this.value);
     msg.voice = voices.find(voice => voice.name === this.value); // Loops over the array of option values until the name matches the users chosen voice
     toggle();
   }
@@ -63,8 +63,9 @@
       }
   }
 
+  // Set the chosen voice option whenever one is selected
   function setOption() {
-    console.log(this.name, this.value);
+    // console.log(this.name, this.value);
     msg[this.name] = this.value;
     toggle();
   }
@@ -73,7 +74,7 @@
   voicesDropdown.addEventListener('change', setVoice); 
   options.forEach(option => option.addEventListener('change', setOption));
   speakButton.addEventListener('click', toggle);
-  stopButton.addEventListener('click', () => toggle(false));
+  stopButton.addEventListener('click', () => toggle(false)); // React-style empty function lets you set the toggle param to false without it only running on page load
 
 </script>
 
